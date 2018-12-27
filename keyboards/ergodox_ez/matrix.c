@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#define  DEBUG_MATRIX_SCAN_RATE
 /*
  * scan matrix
  */
@@ -113,6 +114,9 @@ uint8_t matrix_cols(void)
 void matrix_init(void)
 {
     // initialize row and col
+	debug_matrix = true;
+	debug_keyboard = true;
+	debug_enable = true;
 
     mcp23018_status = init_mcp23018();
 
@@ -291,8 +295,16 @@ static void  init_cols(void)
 
     // init on teensy
     // Input with pull-up(DDR:0, PORT:1)
-    DDRF  &= ~(1<<7 | 1<<6 | 1<<5 | 1<<4 | 1<<1 | 1<<0);
-    PORTF |=  (1<<7 | 1<<6 | 1<<5 | 1<<4 | 1<<1 | 1<<0);
+    //DDRF  &= ~(1<<7 | 1<<6 | 1<<5 | 1<<4 | 1<<1 | 1<<0);
+    //PORTF |=  (1<<7 | 1<<6 | 1<<5 | 1<<4 | 1<<1 | 1<<0);
+
+	// Pro Micro
+	DDRF 	&= ~(1<<PF4 | 1<<PF5 | 1<<PF6 | 1<<PF7);
+	PORTF	|=  (1<<PF4 | 1<<PF5 | 1<<PF6 | 1<<PF7);
+
+	DDRB	&= ~(1<<PB1 | 1<<PB2);
+	PORTB	|= ~(1<<PB1 | 1<<PB2);
+	
 }
 
 static matrix_row_t read_cols(uint8_t row)
@@ -319,7 +331,21 @@ static matrix_row_t read_cols(uint8_t row)
 	 * we'll return 1s for the top two, but that's harmless.
 	 */
 
-        return ~((PINF & 0x03) | ((PINF & 0xF0) >> 2));
+    //    return ~((PINF & 0x03) | ((PINF & 0xF0) >> 2));
+return 
+    //(PIND&(1<<PD3) ? 0 : (1<<6)) |
+    //(PIND&(1<<PD2) ? 0 : (1<<5)) |
+    //(PIND&(1<<PD4) ? 0 : (1<<4)) |
+    //(PINC&(1<<PC6) ? 0 : (1<<3)) |
+    //(PIND&(1<<PD7) ? 0 : (1<<2)) |
+    //(PINE&(1<<PE6) ? 0 : (1<<1)) |
+    //(PINB&(1<<PB4) ? 0 : (1<<0)) ;
+    (PINF&(1<<PF4) ? 0 : (1<<5)) |
+    (PINF&(1<<PF5) ? 0 : (1<<4)) |
+    (PINF&(1<<PF6) ? 0 : (1<<3)) |
+    (PINF&(1<<PF7) ? 0 : (1<<2)) |
+    (PINB&(1<<PB1) ? 0 : (1<<1)) |
+    (PINB&(1<<PB2) ? 0 : (1<<0)) ;
     }
 }
 
@@ -341,12 +367,21 @@ static void unselect_rows(void)
 
     // unselect on teensy
     // Hi-Z(DDR:0, PORT:0) to unselect
-    DDRB  &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3);
-    PORTB &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3);
-    DDRD  &= ~(1<<2 | 1<<3);
-    PORTD &= ~(1<<2 | 1<<3);
-    DDRC  &= ~(1<<6);
-    PORTC &= ~(1<<6);
+    //DDRB  &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3);
+    //PORTB &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3);
+    //DDRD  &= ~(1<<2 | 1<<3);
+    //PORTD &= ~(1<<2 | 1<<3);
+    //DDRC  &= ~(1<<6);
+    //PORTC &= ~(1<<6);
+
+	DDRE  &= ~(1<<PE6);
+	PORTE &= ~(1<<PE6);
+	DDRD  &= ~(1<<PD2 | 1<<PD3 | 1<<PD4 | 1<<PD7);
+	PORTD &= ~(1<<PD2 | 1<<PD3 | 1<<PD4 | 1<<PD7);
+	DDRC  &= ~(1<<PC6);
+	PORTC &= ~(1<<PC6);
+	DDRB  &= ~(1<<PB4);
+	PORTB &= ~(1<<PB4);
 }
 
 static void select_row(uint8_t row)
@@ -367,35 +402,35 @@ static void select_row(uint8_t row)
     } else {
         // select on teensy
         // Output low(DDR:1, PORT:0) to select
-        switch (row) {
-            case 7:
-                DDRB  |= (1<<0);
-                PORTB &= ~(1<<0);
-                break;
-            case 8:
-                DDRB  |= (1<<1);
-                PORTB &= ~(1<<1);
-                break;
-            case 9:
-                DDRB  |= (1<<2);
-                PORTB &= ~(1<<2);
-                break;
-            case 10:
-                DDRB  |= (1<<3);
-                PORTB &= ~(1<<3);
-                break;
-            case 11:
-                DDRD  |= (1<<2);
-                PORTD &= ~(1<<2);
-                break;
-            case 12:
-                DDRD  |= (1<<3);
-                PORTD &= ~(1<<3);
-                break;
-            case 13:
-                DDRC  |= (1<<6);
-                PORTC &= ~(1<<6);
-                break;
-        }
+			switch (row) {
+					case 7:
+							DDRD  |=  (1<<PD3);
+							PORTD &= ~(1<<PD3);
+							break;
+					case 8:
+							DDRD  |=  (1<<PD2);
+							PORTD &= ~(1<<PD2);
+							break;
+					case 9:
+							DDRD  |=  (1<<PD4);
+							PORTD &= ~(1<<PD4);
+							break;
+					case 10:
+							DDRC  |=  (1<<PC6);
+							PORTC &= ~(1<<PC6);
+							break;
+					case 11:
+							DDRD  |=  (1<<PD7);
+							PORTD &= ~(1<<PD7);
+							break;
+					case 12:
+							DDRE  |=  (1<<PE6);
+							PORTE &= ~(1<<PE6);
+							break;
+					case 13:
+							DDRB  |= (1<<PB4);
+							PORTB &= ~(1<<PB4);
+							break;
+			}
     }
 }
