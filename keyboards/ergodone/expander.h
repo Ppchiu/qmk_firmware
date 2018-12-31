@@ -39,6 +39,7 @@ enum EXPANDER_REG_BANK0 {
 
 void expander_init(void);
 void expander_scan(void);
+uint8_t init_mcp23018(void);
 void expander_read_cols(void);
 uint8_t expander_get_col(uint8_t col);
 matrix_row_t expander_read_row(void);

@@ -2,11 +2,14 @@
 #define ERGODOX_ERGODONE_H
 
 #include "quantum.h"
+#include "i2cmaster.h"
 #include <stdint.h>
 #include <stdbool.h>
 
 #define CPU_PRESCALE(n) (CLKPR = 0x80, CLKPR = (n))
 #define CPU_16MHz       0x00
+
+extern int16_t mcp23018_status;
 
 void init_ergodox(void);
 
