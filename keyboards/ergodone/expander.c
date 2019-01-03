@@ -34,6 +34,7 @@ uint8_t init_mcp23018(void);
 
 void expander_init(void)
 {
+  uprintf("expander_init");
   i2c_init();
   expander_scan();
 }
@@ -103,7 +104,6 @@ void expander_scan(void)
       clear_keyboard();
     }
   }
-  uprintf("%d\n", expander_status);
 }
 
 void expander_read_cols(void)
@@ -146,8 +146,11 @@ void expander_select_row(uint8_t row)
 
 void expander_config(void)
 {
+  //Invert the values of the registers of all the A input pins
   expander_write(EXPANDER_REG_IPOLA, 0xFF);
+  //Enable pull up on all A input pins
   expander_write(EXPANDER_REG_GPPUA, 0xFF);
+  //Set B pins to input
   expander_write(EXPANDER_REG_IODIRB, 0xFF);
 }
 

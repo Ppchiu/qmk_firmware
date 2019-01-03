@@ -85,7 +85,6 @@ void matrix_init(void)
   unselect_rows();
   init_cols();
 
-  init_mcp23018();
   // initialize matrix state: all keys off
   for (uint8_t i=0; i < MATRIX_ROWS; i++) {
     matrix[i] = 0;
@@ -145,7 +144,7 @@ void debounce_report(matrix_row_t change, uint8_t row) {
 
 uint8_t matrix_scan(void)
 {
-  //expander_scan();
+  expander_scan();
 
 #ifdef DEBUG_MATRIX_SCAN_RATE
   matrix_scan_count++;
@@ -234,22 +233,22 @@ static void  init_cols(void)
 
 static matrix_row_t read_cols(uint8_t row)
 {
-  //return expander_read_row() |
-  //  (PIND&(1<<PD3) ? 0 : (1<<6)) |
-  //  (PIND&(1<<PD2) ? 0 : (1<<5)) |
-  //  (PIND&(1<<PD4) ? 0 : (1<<4)) |
-  //  (PINC&(1<<PC6) ? 0 : (1<<3)) |
-  //  (PIND&(1<<PD7) ? 0 : (1<<2)) |
-  //  (PINE&(1<<PE6) ? 0 : (1<<1)) |
-  //  (PINB&(1<<PB4) ? 0 : (1<<0)) ;
-  return  
-    (PIND&(1<<PD3) ? 0 : (1<<13)) |
-    (PIND&(1<<PD2) ? 0 : (1<<12)) |
-    (PIND&(1<<PD4) ? 0 : (1<<11)) |
-    (PINC&(1<<PC6) ? 0 : (1<<10)) |
-    (PIND&(1<<PD7) ? 0 : (1<<9)) |
-    (PINE&(1<<PE6) ? 0 : (1<<8)) |
-    (PINB&(1<<PB4) ? 0 : (1<<7)) ;
+  return ( expander_read_row() >> 7 ) |
+    ((PIND&(1<<PD3) ? 0 : (1<<6)) |
+    (PIND&(1<<PD2) ? 0 : (1<<5)) |
+    (PIND&(1<<PD4) ? 0 : (1<<4)) |
+    (PINC&(1<<PC6) ? 0 : (1<<3)) |
+    (PIND&(1<<PD7) ? 0 : (1<<2)) |
+    (PINE&(1<<PE6) ? 0 : (1<<1)) |
+    (PINB&(1<<PB4) ? 0 : (1<<0)) << 7);
+  //return
+  //  (PIND&(1<<PD3) ? 0 : (1<<13)) |
+  //  (PIND&(1<<PD2) ? 0 : (1<<12)) |
+  //  (PIND&(1<<PD4) ? 0 : (1<<11)) |
+  //  (PINC&(1<<PC6) ? 0 : (1<<10)) |
+  //  (PIND&(1<<PD7) ? 0 : (1<<9)) |
+  //  (PINE&(1<<PE6) ? 0 : (1<<8)) |
+  //  (PINB&(1<<PB4) ? 0 : (1<<7)) ;
 }
 
 /* Row pin configuration
