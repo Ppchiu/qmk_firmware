@@ -83,7 +83,7 @@ inline void ergodox_led_all_set(uint8_t n)              {}
     k40,k41,k42,k43,k44,                                        \
                             k55,k56,                            \
                                 k54,                            \
-                        k53,k52,k51,                            \
+                        k51,k52,k53,                            \
                                                                 \
         k07,k08,k09,k0A,k0B,k0C,k0D,                            \
         k17,k18,k19,k1A,k1B,k1C,k1D,                            \
@@ -92,7 +92,7 @@ inline void ergodox_led_all_set(uint8_t n)              {}
                 k49,k4A,k4B,k4C,k4D,                            \
     k57,k58,                                                    \
     k59,                                                        \
-    k5C,k5B,k5A )                                               \
+    k5A,k5B,k5C )                                               \
                                                                 \
    /* matrix positions */                                       \
    {                                                            \
