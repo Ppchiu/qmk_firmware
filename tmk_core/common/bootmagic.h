@@ -6,7 +6,7 @@
 
 /* bootmagic salt key */
 #ifndef BOOTMAGIC_KEY_SALT
-#define BOOTMAGIC_KEY_SALT              KC_SPACE
+#define BOOTMAGIC_KEY_SALT              KC_ENT
 #endif
 
 /* skip bootmagic and eeconfig */
@@ -21,7 +21,7 @@
 
 /* kick up bootloader */
 #ifndef BOOTMAGIC_KEY_BOOTLOADER
-#define BOOTMAGIC_KEY_BOOTLOADER        KC_B
+#define BOOTMAGIC_KEY_BOOTLOADER        KC_N
 #endif
 
 /* debug enable */
