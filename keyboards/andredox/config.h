@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DESCRIPTION     Redox keyboard with MCP23018 I/O Expander
 
 /* key matrix size (per side) */
-#define MATRIX_ROWS 5
+#define MATRIX_ROWS 6
 #define MATRIX_COLS 14
 #define MATRIX_ROWS_TOTAL (MATRIX_ROWS * 2)
 #define MATRIX_COLS_PER_SIDE (MATRIX_COLS / 2)
