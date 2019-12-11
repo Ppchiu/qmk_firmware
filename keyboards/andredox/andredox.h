@@ -34,5 +34,5 @@ void board_led_on(void);
     { k24  , k25  , k26  , k27  , k28  , k29  , k30  , k31  , k32  , k33  , k34  , k35   }, \
     { k36  , k37  , k38  , k39  , k40  , k41  , k42  , k43  , k44  , k45  , k46  , k47   }, \
     { KC_NO, KC_NO, k48  , k49  , KC_NO, KC_NO, KC_NO, KC_NO, k50  , k51  , KC_NO, KC_NO }, \
-    { KC_NO, KC_NO, KC_NO, k52  , k53  , k54  , k55  , k56  , k57  , k60  , k61  , KC_NO }, \
+    { KC_NO, k58  , k59  , k52  , k53  , k54  , k55  , k56  , k57  , k60  , k61  , KC_NO }, \
 }
