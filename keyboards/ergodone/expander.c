@@ -121,6 +121,7 @@ uint8_t expander_get_col(uint8_t col)
 
 matrix_row_t expander_read_row(void)
 {
+    return 0;
   expander_read_cols();
 
   /* make cols */

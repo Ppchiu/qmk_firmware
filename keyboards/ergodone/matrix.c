@@ -78,6 +78,8 @@ uint8_t matrix_cols(void)
 
 void matrix_init(void)
 {
+    debug_enable = true;
+    debug_matrix = true;
   // disable JTAG
   MCUCR = (1<<JTD);
   MCUCR = (1<<JTD);
@@ -144,7 +146,8 @@ void debounce_report(matrix_row_t change, uint8_t row) {
 
 uint8_t matrix_scan(void)
 {
-  expander_scan();
+    print("matrix scan\n");
+  //expander_scan();
 
 #ifdef DEBUG_MATRIX_SCAN_RATE
   matrix_scan_count++;

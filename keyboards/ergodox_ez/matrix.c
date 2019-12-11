@@ -118,7 +118,7 @@ void matrix_init(void)
 	debug_keyboard = true;
 	debug_enable = true;
 
-    mcp23018_status = init_mcp23018();
+    //mcp23018_status = init_mcp23018();
 
 
     unselect_rows();
@@ -143,7 +143,7 @@ void matrix_init(void)
 }
 
 void matrix_power_up(void) {
-    mcp23018_status = init_mcp23018();
+    //mcp23018_status = init_mcp23018();
 
     unselect_rows();
     init_cols();
@@ -189,7 +189,7 @@ matrix_row_t debounce_read_cols(uint8_t row) {
 
 uint8_t matrix_scan(void)
 {
-    if (mcp23018_status) { // if there was an error
+    if (0 && mcp23018_status) { // if there was an error
         if (++mcp23018_reset_loop == 0) {
         // if (++mcp23018_reset_loop >= 1300) {
             // since mcp23018_reset_loop is 8 bit - we'll try to reset once in 255 matrix scans
@@ -310,6 +310,7 @@ static void  init_cols(void)
 static matrix_row_t read_cols(uint8_t row)
 {
     if (row < 7) {
+        return 0;
         if (mcp23018_status) { // if there was an error
             return 0;
         } else {
@@ -387,6 +388,7 @@ static void unselect_rows(void)
 static void select_row(uint8_t row)
 {
     if (row < 7) {
+        return;
         // select on mcp23018
         if (mcp23018_status) { // if there was an error
             // do nothing
